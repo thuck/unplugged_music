@@ -11,7 +11,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
 
-class Nyan(object):
+class MusicControl(object):
     def __init__(self, music_file):
         self.song_path = 'file://%s' % (music_file)
         self.player = gst.element_factory_make("playbin", "player")
@@ -44,8 +44,8 @@ if __name__ == '__main__':
 
     proxy_object = bus.get_object('org.freedesktop.UPower', '/org/freedesktop/UPower')
     power = dbus.Interface(proxy_object, 'org.freedesktop.DBus.Properties')
-    nyan = Nyan(sys.argv[1])
-    bus.add_signal_receiver(nyan.change_state,
+    music = MusicControl(sys.argv[1])
+    bus.add_signal_receiver(music.change_state,
                        dbus_interface="org.freedesktop.UPower",
                        signal_name="Changed")
 
